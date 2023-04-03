@@ -22,3 +22,6 @@ def manhattan(source, dest):
     """
     distance = abs(source[0] - dest[0]) + abs(source[1] - dest[1])
     return distance
+
+def a_star(G, source, dest):
+    return None
