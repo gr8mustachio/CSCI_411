@@ -1,9 +1,9 @@
 import networkx as nx
 import math
+import random
 import matplotlib.pyplot as plt
-from functions import euclidian, manhattan
+from functions import euclidian, manhattan, a_star, add_edge_to_graph
 
-print('hello')
 #what I want to do
 """
 Heuristics:
@@ -13,17 +13,31 @@ Heuristics:
     make sure to check office hour video to see other types of heuistics
 Classes:
 Make graphs"""
-g = nx.Graph()
-f = nx.grid_2d_graph(9,5)
-plt.figure(figsize=(8,8))
-coords = {(x,y):(y,-x) for x,y in f.nodes()}
+G = nx.Graph()
+
+#            0       1         2       3       4        5       6
+points = [(1, 7), (8, 10), (12, 8), (5, 4), (2, 1), (12, 2), (5, 16)]  # (x,y) points
+edges = [(0, 1, 12), (1, 2, 7), (2, 3, 24), (0, 3, 6), (3, 4, 9), (2, 5, 17), (6, 1, 42)]  # (u, v, weight) edges
+
+for i in range(len(edges)):
+    add_edge_to_graph(G, points[edges[i][0]], points[edges[i][1]], edges[i][2])
+# Custom graph layout
+pos = {point: point for point in points}
+
+# adding axis
+fig, axis = plt.subplots()
+edge_labels = nx.get_edge_attributes(G, 'weight')
+
+nx.draw(G, pos=pos, ax=axis)
+nx.draw_networkx_nodes(G, pos, node_size=400, ax=axis)
+nx.draw_networkx_edges(G, pos, ax=axis)
+nx.draw_networkx_labels(G, pos, font_size=10)
+nx.draw_networkx_edge_labels(G, pos, edge_labels)
 plt.axis('on')
-nx.draw(f, pos=coords, node_color='lightblue', with_labels=True)
-
-# edges = {('(0,0)', '(0,1)') : '2nd Street'}
-# nx.draw_networkx_edge_labels(f, coords, edge_labels=edges)
-
-plt.savefig("g.png")
+axis.set_xlim(0, 20)
+axis.set_ylim(0, 20)
+axis.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
+plt.savefig("G2.png")
 plt.close()
 # g.add_node(2)
 # g.add_node(5)
