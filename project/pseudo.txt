@@ -1,0 +1,57 @@
+
+function a_star(G, source, goal_node) {
+
+    open = PriorityQueue with priority being based off of the equation: f(x) = g(x) + h(x)
+    closed = Set
+    parents = Map 
+    path = List
+
+    open.push(0, source)
+    g(source) = 0
+
+    while open is not empty:
+        current_node = frontmost entry in open
+        if current_node is goal_node:
+            solution found 
+            print path
+            return true
+        ENDIF
+        
+        for all neighbors of current_node:
+            neighbor_cost = g(x) + edge_weight(current_node, neighbor)
+
+            if neighbor is in open:
+                if g(neighbor) is greater than or equal to neighbor_cost
+                    continue to next neighbor
+                ENDIF
+            else if neighbor is in closed:
+                if g(neighbor) is greater than or equal to neighbor_cost:
+                    continue to next neighbor
+                else:
+                    compute f(neighbor)
+                    move neighbor from closed to open
+                ENDIF
+            else: 
+                compute f(neighbor)
+                add neighbor to open
+                set h(neighbor) to be heuristic distance from itself to goal_node
+            ENDIF
+
+            set g(neighbor) = neighbor_cost
+            parent of neighbor is current
+        ENDFOR
+
+        add current_node to closed
+    ENDWHILE
+
+    if current_node is not goal_node:
+        there is no possible path; return false
+}
+
+function g(x) {
+    return shortest path length from the source to x
+}
+
+function h(x){
+    returns euclidian distance from the goal to x
+}

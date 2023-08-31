@@ -1,0 +1,10 @@
+Chomsky Normal Form Examples
+
+S -> AAA | B 
+A -> aA | B
+B -> e (sigma, empty string)
+
+Turing Machines:
+- A General computational model
+    - the Church-Turing Thesis
+    - Simple enough to facilitate formal proofs
